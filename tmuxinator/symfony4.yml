@@ -1,0 +1,26 @@
+# ~/.tmuxinator/symfony4.yml
+
+name: symfony4Project
+root: /my/project/dir
+
+
+windows:
+  # Primary working window
+  - editor:
+      layout: main-vertical
+      panes:
+        # Blank windor for commands
+        - 
+        # Search for any windows using livereload, then kill and restart process
+        # We search for the pid by the port number in case another process has started
+        # its own copy
+        - lsof -t -i tcp:35729 | xargs kill && yarn run encore dev --watch
+        # Start the symfony dev server, search by the port since different versions of 
+        # Symfony use different process descriptions 
+        - lsof -t -i tcp:8000 | xargs kill && bin/console server:run -vvv
+  # Window to show symfony information
+  - symfony_info:
+     layout: even-horizontal
+     panes:
+       - bin/console debug:container
+       - bin/console debug:router

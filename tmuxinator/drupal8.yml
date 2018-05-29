@@ -1,0 +1,20 @@
+# ~/.tmuxinator/drupal8.yml
+
+name: drupal8
+root: /your/drupal/site
+
+
+# Primary working window
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        # Blank windor for commands
+        - 
+        # Search for any windows using livereload, then kill and restart process
+        # We search for the pid by the port number in case another process has started
+        # its own copy. This example is using webpack encore to handle assets
+        - cd themes/custom/yourTheme && lsof -t -i tcp:35729 | xargs kill && yarn run encore dev --watch
+        # Start the drupal dev server, search by the port since different versions of 
+        # drupal use different process descriptions 
+        - lsof -t -i tcp:8888 | xargs kill && drush rs
