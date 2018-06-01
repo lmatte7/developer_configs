@@ -16,8 +16,8 @@ windows:
         # its own copy
         - lsof -t -i tcp:35729 | xargs kill && yarn run encore dev --watch
         # Start the symfony dev server, search by the port since different versions of 
-        # Symfony use different process descriptions 
-        - lsof -t -i tcp:8000 | xargs kill && bin/console server:run -vvv
+        # Symfony use different process descriptions. Then grep by php to only kill the dev server
+        - lsof -i tcp:8000  | grep php | awk '{print $2}' | xargs kill && bin/console server:run -vvv
   # Window to show symfony information
   - symfony_info:
      layout: even-horizontal
