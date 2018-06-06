@@ -3,6 +3,20 @@
 name: drupal8
 root: /your/drupal/site
 
+# Project hooks
+# Runs on project start, always
+# Use a PHPStorm alias to start the IDE in the current directory 
+on_project_start: pstorm .
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# Kill all instances of PHP Storm
+on_project_stop: ps -ef | grep phpstorm | grep -v grep | awk '{print $2}' | xargs kill -9
+
 
 # Primary working window
 windows:
